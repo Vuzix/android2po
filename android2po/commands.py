@@ -41,6 +41,26 @@ def catalog2string(catalog, **kwargs):
     return sf.getvalue().decode('utf-8')
 
 
+_CONTAINER_TAGS = ('resources', 'string-array', 'plurals')
+
+
+def _indent_resources(elem, space="    ", level=0):
+    """Indent the resource structure the way Android Studio does.
+
+    Unlike ``etree.indent()``, this only adds whitespace between container
+    elements and their children; the contents of ``<string>`` and ``<item>``
+    are never touched, since whitespace there is part of the value.
+    """
+    if elem.tag not in _CONTAINER_TAGS or len(elem) == 0:
+        return
+    child_indent = "\n" + space * (level + 1)
+    elem.text = child_indent
+    for child in elem:
+        _indent_resources(child, space, level + 1)
+        child.tail = child_indent
+    child.tail = "\n" + space * level
+
+
 def xml2string(tree, action):
     """Helper that returns a ``ResourceTree`` as an XML string.
 
@@ -49,8 +69,10 @@ def xml2string(tree, action):
     """
     ENCODING = 'utf-8'
     dom = convert.write_xml(tree, warnfunc=action.message)
-    return etree.tostring(dom, xml_declaration=True,
-                          encoding=ENCODING, pretty_print=True).decode('utf-8')
+    _indent_resources(dom)
+    return etree.tostring(dom, xml_declaration=False,
+                          doctype='<?xml version="1.0" encoding="' + ENCODING + '"?>',
+                          encoding=ENCODING, pretty_print=True).decode(ENCODING)
 
 
 def read_xml(action, filename, **kw):
@@ -428,7 +450,7 @@ class InitCommand(Command):
             # This will make us pick up the language on subsequent runs.
             for kind in self.env.xmlfiles:
                 if write_file(self, language.xml(kind),
-                              """<?xml version='1.0' encoding='utf-8'?>\n<resources>\n</resources>""",
+                              """<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<resources>\n</resources>""",
                               update=False, ignore_exists=show_exists):
                     something_done = True
 
