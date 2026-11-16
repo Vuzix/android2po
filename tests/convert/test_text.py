@@ -20,7 +20,7 @@ import re
 from io import StringIO
 from lxml import etree
 from babel.messages import Catalog
-from nose.tools import assert_raises
+from pytest import raises as assert_raises
 from android2po import xml2po, po2xml, read_xml, write_xml
 from ..helpers import TestWarnFunc
 

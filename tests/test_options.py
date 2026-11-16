@@ -1,7 +1,7 @@
 """Tests for each of the various configuration options.
 """
 
-from nose.tools import assert_raises
+from pytest import raises as assert_raises
 from tests.helpers import ProgramTest, SystemExitCaught, NonZeroReturned
 from babel.messages import Catalog
 

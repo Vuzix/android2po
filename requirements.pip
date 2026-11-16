@@ -1,8 +1,6 @@
 # Install using pip install -r requirements.pip
 
-argparse
 babel>=2.4.0
 colorama
 lxml
-ordereddict
 termcolor

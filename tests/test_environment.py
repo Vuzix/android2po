@@ -4,7 +4,7 @@ detected, the proper directories assumed etc).
 """
 
 from tests.helpers import ProgramTest, NonZeroReturned
-from nose.tools import assert_raises
+from pytest import raises as assert_raises
 
 
 class TestCollect(ProgramTest):

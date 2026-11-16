@@ -4,7 +4,7 @@
 from __future__ import unicode_literals
 
 from io import StringIO
-from nose.tools import assert_raises
+from pytest import raises as assert_raises
 from android2po.program import read_config, CommandError
 
 

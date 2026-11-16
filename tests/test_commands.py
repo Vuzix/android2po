@@ -9,7 +9,7 @@ will thus ensure that commands run, but does not check that they do the
 right thing.
 """
 
-from nose.tools import assert_raises
+from pytest import raises as assert_raises
 from babel.messages import Catalog
 from android2po.convert import StringArray
 from .helpers import ProgramTest

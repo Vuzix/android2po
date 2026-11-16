@@ -1,7 +1,6 @@
 from __future__ import absolute_import
 
 import os
-import collections
 try:
     from cStringIO import StringIO as BytesIO
 except ImportError:  # pragma: no cover
@@ -180,7 +179,7 @@ def write_file(cmd, filename, content, update=True, action=None,
 
     f = open(filename, 'wb')
     try:
-        if isinstance(content, collections.Callable):
+        if callable(content):
             content = content()
         f.write(content.encode('utf-8'))
         f.flush()

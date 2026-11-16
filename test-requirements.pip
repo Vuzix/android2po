@@ -1,8 +1,4 @@
-# Install using pip install -r requirements.pip
+# Install using pip install -r test-requirements.pip
 
-nose
-
-coverage
-
-# for coveralls.io web service
-coveralls
+pytest
+pytest-cov

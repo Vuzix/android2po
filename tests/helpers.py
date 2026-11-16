@@ -59,6 +59,10 @@ class Tee(object):
             else:
                 f.write(data.decode('UTF-8'))
 
+    def flush(self):
+        for f in self.args:
+            f.flush()
+
 
 class TempProject(object):
     """Represents a dummy-Android project in a temporary directory that
@@ -222,11 +226,11 @@ class ProgramTest(object):
         self.projects.append(p)
         return p
 
-    def setup(self):
+    def setup_method(self):
         # Start with a fresh list of projects for the test.
         self.projects = []
 
-    def teardown(self):
+    def teardown_method(self):
         # Clear all projects that might have been created by the test.
         for p in self.projects:
             p.delete()
